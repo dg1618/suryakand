@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
+	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+	version="2.4">
+
+	<error-page>
+		<error-code>404</error-code>
+		<location>/pagenotfound.jsp</location>
+    </error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error.jsp</location>
+    </error-page>
+    
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>/WEB-INF/log4j.properties</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+
+	<!-- Context cleanup listeners -->
+	<listener>
+		<listener-class>org.apache.commons.logging.impl.ServletContextCleaner</listener-class>
+	</listener>
+
+	<!-- Request listeners -->
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+
+	<!-- application context config locations and listener -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+              classpath:applicationContext.xml
+        </param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<servlet>
+		<servlet-name>example-servlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:example-servlet.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>example-servlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
+	<!--  Web Filters -->
+    <filter>
+    	<filter-name>requestContextFilter</filter-name>
+        <filter-class>org.springframework.web.filter.RequestContextFilter</filter-class>
+    </filter>
+	<filter-mapping>
+	   <filter-name>requestContextFilter</filter-name>
+	   <url-pattern>/*</url-pattern>
+	   <dispatcher>REQUEST</dispatcher>
+	   <dispatcher>ERROR</dispatcher>
+	</filter-mapping>
+ 	
+	<welcome-file-list>
+		<welcome-file>/</welcome-file>
+	</welcome-file-list>
+
+</web-app>

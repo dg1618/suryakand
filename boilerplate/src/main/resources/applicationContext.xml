@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd">
+     
+    <bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor"/>
+    <bean id="servletContext" class="org.springframework.web.context.support.ServletContextFactoryBean" />
+    <bean id="servletContextResourceLoader" class="org.springframework.web.context.support.ServletContextResourceLoader">
+        <constructor-arg ref="servletContext"/>
+    </bean>
+        
+    <bean id="defaultPropertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations" ref="propertyConfigPath"/>
+        <property name="fileEncoding" value="UTF-8"/>
+        <property name="order" value="10000" />
+    </bean>
+	
+	<bean id="propertyConfigPath" parent="basePropertyConfigPath"/>
+	<bean id="basePropertyConfigPath" abstract="true" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                 <value>classpath:application-config.properties</value>
+            </list>
+        </property>
+    </bean>
+    
+    <!-- Messages ==========================================================-->
+    <bean id="messageSource" parent="baseMessageSource" />
+    <bean id="baseMessageSource" abstract="true" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>/WEB-INF/messages</value>
+            </list>
+        </property>
+        <property name="defaultEncoding" value="${property.file.encoding}"/>
+        <property name="cacheSeconds" value="${message.cache.seconds}"/>
+	    <property name="fallbackToSystemLocale" value="false"/>
+    </bean>
+
+	<bean id="applicationConfig" parent="baseApplicationConfigSource"/>
+    <bean id="baseApplicationConfigSource" abstract="true" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames" ref="propertyConfigPath"/>
+        <property name="defaultEncoding" value="${property.file.encoding}"/>
+        <property name="cacheSeconds" value="${config.cache.seconds}"/>
+    </bean>
+
+    <bean id="sevletContextAttributes" parent="baseSevletContextAttributes" />
+    <bean id="baseSevletContextAttributes" abstract="true" class="org.springframework.web.context.support.ServletContextAttributeExporter">
+        <property name="attributes">
+            <map>
+                <entry key="applicationConfig">
+                    <ref bean="applicationConfig"/>
+                </entry>
+            </map>
+        </property>
+    </bean>
+</beans>
