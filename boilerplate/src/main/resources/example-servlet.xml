@@ -13,7 +13,7 @@
     <mvc:annotation-driven />
 		
 	<!-- Maps '/' requests to the 'home' view -->
-	<mvc:view-controller path="/" view-name="home"/>
+	<mvc:view-controller path="/" view-name="${default.home.page.view}"/>
 	
     <mvc:interceptors>
       <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
@@ -67,4 +67,15 @@
         <property name="defaultThemeName" value="default" />
     </bean>
 
+    <!-- Controllers -->
+    <bean class="com.surya.tutorials.web.controller.UserListController">
+        <property name="viewName" value="${userlist.view}" />
+        <property name="userDao" ref="userDao" />
+    </bean>
+
+    <bean class="com.surya.tutorials.web.controller.CreateUserController">
+        <property name="viewName" value="${createuser.view}" />
+        <property name="createSucessView" value="redirect:${userlist.page.url}" />
+        <property name="userDao" ref="userDao" />
+    </bean>    
 </beans>

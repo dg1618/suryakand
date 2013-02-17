@@ -12,6 +12,14 @@
 
     <definition name="home" extends="site.template">
     </definition>
+
+    <definition name="userlist" extends="site.template">
+    	<put-attribute name="body" value="/WEB-INF/views/pages/userlist.jsp" />
+    </definition>
+
+    <definition name="createuser" extends="site.template">
+    	<put-attribute name="body" value="/WEB-INF/views/pages/createuser.jsp" />
+    </definition>
     
     <definition name="error" extends="site.template">
     	<put-attribute name="body" value="/WEB-INF/views/pages/error.jsp" />
