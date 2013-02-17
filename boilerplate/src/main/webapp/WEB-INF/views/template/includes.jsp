@@ -16,3 +16,4 @@
 <!-- JavaScript files -->
 <script type="text/javascript" src="/themes/common/js/jquery.min-1.9.0.js"></script>
 <script type="text/javascript" src="/themes/common/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="/themes/common/js/jquery.validate.min.js"></script>
