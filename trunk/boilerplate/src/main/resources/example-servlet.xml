@@ -14,6 +14,7 @@
 		
 	<!-- Maps '/' requests to the 'home' view -->
 	<mvc:view-controller path="/" view-name="${default.home.page.view}"/>
+	<mvc:view-controller path="/qrcodedemo" view-name="qrcodedemo"/>
 	
     <mvc:interceptors>
       <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />

@@ -13,6 +13,7 @@
 				<ul class="dropdown-menu">
 					<li><a href="/user/all">HSQL DB example</a></li>
 					<li><a href="/user/create">AJAX Form Validation</a></li>
+					<li><a href="/qrcodedemo">QR Code Demo</a></li>
 				</ul>
 			</li>
 		</ul> 
