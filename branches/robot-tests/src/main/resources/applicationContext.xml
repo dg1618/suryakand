@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd">
+     
+    <bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor"/>
+    <bean id="servletContext" class="org.springframework.web.context.support.ServletContextFactoryBean" />
+    <bean id="servletContextResourceLoader" class="org.springframework.web.context.support.ServletContextResourceLoader">
+        <constructor-arg ref="servletContext"/>
+    </bean>
+        
+    <bean id="defaultPropertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations" ref="propertyConfigPath"/>
+        <property name="fileEncoding" value="UTF-8"/>
+        <property name="order" value="10000" />
+    </bean>
+	
+	<bean id="propertyConfigPath" parent="basePropertyConfigPath"/>
+	<bean id="basePropertyConfigPath" abstract="true" class="org.springframework.beans.factory.config.ListFactoryBean">
+        <property name="sourceList">
+            <list>
+                 <value>classpath:application-config.properties</value>
+            </list>
+        </property>
+    </bean>
+    
+    <!-- Messages ==========================================================-->
+    <bean id="messageSource" parent="baseMessageSource" />
+    <bean id="baseMessageSource" abstract="true" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>/WEB-INF/messages</value>
+            </list>
+        </property>
+        <property name="defaultEncoding" value="${property.file.encoding}"/>
+        <property name="cacheSeconds" value="${message.cache.seconds}"/>
+	    <property name="fallbackToSystemLocale" value="false"/>
+    </bean>
+
+	<bean id="applicationConfig" parent="baseApplicationConfigSource"/>
+    <bean id="baseApplicationConfigSource" abstract="true" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames" ref="propertyConfigPath"/>
+        <property name="defaultEncoding" value="${property.file.encoding}"/>
+        <property name="cacheSeconds" value="${config.cache.seconds}"/>
+    </bean>
+
+    <bean id="sevletContextAttributes" parent="baseSevletContextAttributes" />
+    <bean id="baseSevletContextAttributes" abstract="true" class="org.springframework.web.context.support.ServletContextAttributeExporter">
+        <property name="attributes">
+            <map>
+                <entry key="applicationConfig">
+                    <ref bean="applicationConfig"/>
+                </entry>
+            </map>
+        </property>
+    </bean>
+    
+
+	<!-- Spring Embeded DB -->
+	<jdbc:embedded-database id="dataSource" type="HSQL">
+        <jdbc:script location="classpath:schema.sql"/>
+        <jdbc:script location="classpath:test-data.sql"/>
+    </jdbc:embedded-database>
+    
+	<!-- DAOs -->
+	<bean id="userDao" class="com.surya.tutorials.db.dao.UserDaoImpl">
+	    <property name="dataSource" ref="dataSource" />
+	</bean>
+     
+</beans>

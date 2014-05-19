@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+    <definition name="site.template" template="/WEB-INF/views/template/template.jsp">
+        <put-attribute name="header" value="/WEB-INF/views/template/header.jsp" />
+        <put-attribute name="body" value="/WEB-INF/views/pages/home.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" />
+        <put-attribute name="staticincludes" value="/WEB-INF/views/template/includes.jsp" />
+    </definition>
+
+    <definition name="home" extends="site.template">
+    </definition>
+
+    <definition name="userlist" extends="site.template">
+    	<put-attribute name="body" value="/WEB-INF/views/pages/userlist.jsp" />
+    </definition>
+
+    <definition name="createuser" extends="site.template">
+    	<put-attribute name="body" value="/WEB-INF/views/pages/createuser.jsp" />
+    </definition>
+
+    <definition name="qrcodedemo" extends="site.template">
+    	<put-attribute name="body" value="/WEB-INF/views/pages/qrcodedemo.jsp" />
+    </definition>
+    
+    <definition name="error" extends="site.template">
+    	<put-attribute name="body" value="/WEB-INF/views/pages/error.jsp" />
+    </definition>
+    
+    <definition name="pagenotfound" extends="site.template">
+    	<put-attribute name="body" value="/WEB-INF/views/pages/pagenotfound.jsp" />
+    </definition>
+
+    <definition name="contactus" extends="site.template">
+    	<put-attribute name="body" value="/WEB-INF/views/pages/contactus.jsp" />
+    </definition>
+
+    <definition name="faq" extends="site.template">
+    	<put-attribute name="body" value="/WEB-INF/views/pages/faq.jsp" />
+    </definition>
+        
+    <definition name="privacypolicy" extends="site.template">
+    	<put-attribute name="body" value="/WEB-INF/views/pages/privacypolicy.jsp" />
+    </definition>
+
+    <definition name="termsuse" extends="site.template">
+    	<put-attribute name="body" value="/WEB-INF/views/pages/termsuse.jsp" />
+    </definition>
+</tiles-definitions>

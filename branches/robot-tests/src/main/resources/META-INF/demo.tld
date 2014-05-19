@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+        version="2.0">
+    
+    <tlib-version>1.1</tlib-version>
+    <short-name>demo</short-name>
+    <uri>http://suryakand-shinde.blogspot.com/demo</uri>
+
+	<tag>
+		<description>Tag to generate QA codes for give data</description>
+		<name>qrcode</name>
+		<tag-class>com.surya.tutorials.barcode.QrCodeTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>Content/Data that needs to be converted to QR code</description>
+			<name>content</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>		
+		<attribute>
+			<description>Image format</description>
+			<name>format</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Height of QR code</description>
+			<name>height</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Width of QR code</description>
+			<name>width</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Page context variable in which Base64 QR code image will be stored</description>
+			<name>var</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>				
+	</tag>
+        
+</taglib>
