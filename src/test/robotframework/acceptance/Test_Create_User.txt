@@ -1,0 +1,29 @@
+*** Settings ***
+Documentation     	Test create user functionality.
+Library           	Selenium2Library
+Library  			String
+Resource          	../settings/Settings.txt
+
+*** Test Cases ***
+Open Landing Page
+	Open Browser	${BASE_URL}    ${BROWSER}    alias=PORTAL
+    Maximize Browser Window
+    Title Should Be		Spring MVC Themes Using LESS CSS - By Suryaknad Shinde
+
+Navigate To Create User Page
+    Click Element		xpath=/html/body/div/div/div/div/div[2]/ul/ul/li/a 
+    Click Element		xpath=/html/body/div/div/div/div/div[2]/ul/ul/li/ul/li[2]/a	
+
+Enter User Data
+	${randomUserName} =  Generate Random String  10  [LETTERS]
+	Input Text				identifier=username    	${randomUserName}
+	Input Text				identifier=firstName   	Robot FirstName
+	Input Text				identifier=middleName  	Robot MiddleName
+	Input Text				identifier=lastName    	Robot LastName
+	Input Text				identifier=phoneNumber  0000000000
+	Input Text				identifier=password    	Robot Password
+	Click Element			xpath=//*[@id="createUser"]
+	Page Should Contain 	${randomUserName}
+
+Close
+    Close Browser
