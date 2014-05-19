@@ -1,1 +1,0 @@
-termsuse.jsp
